@@ -73,12 +73,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return characters.length;
+            return characters.length * 100;
         }
 
         @Override
         public GoTCharacter getItem(int position) {
-            return characters[position];
+            return characters[position % characters.length];
         }
 
         @Override
