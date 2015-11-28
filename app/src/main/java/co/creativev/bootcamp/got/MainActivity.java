@@ -90,11 +90,25 @@ public class MainActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.list_item_got, parent, false);
+                TextView name = (TextView) convertView.findViewById(R.id.text);
+                ImageView image = (ImageView) convertView.findViewById(R.id.image);
+                convertView.setTag(new GotViewHolder(name, image));
             }
             GoTCharacter item = getItem(position);
-            ((TextView) convertView.findViewById(R.id.text)).setText(item.name);
-            ((ImageView) convertView.findViewById(R.id.image)).setImageResource(item.resId);
+            GotViewHolder tag = (GotViewHolder) convertView.getTag();
+            tag.name.setText(item.name);
+            tag.image.setImageResource(item.resId);
             return convertView;
+        }
+    }
+
+    public static class GotViewHolder {
+        private final TextView name;
+        private final ImageView image;
+
+        public GotViewHolder(TextView name, ImageView image) {
+            this.name = name;
+            this.image = image;
         }
     }
 }
