@@ -88,11 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = inflater.inflate(R.layout.list_item_got, parent, false);
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.list_item_got, parent, false);
+            }
             GoTCharacter item = getItem(position);
-            ((TextView) view.findViewById(R.id.text)).setText(item.name);
-            ((ImageView) view.findViewById(R.id.image)).setImageResource(item.resId);
-            return view;
+            ((TextView) convertView.findViewById(R.id.text)).setText(item.name);
+            ((ImageView) convertView.findViewById(R.id.image)).setImageResource(item.resId);
+            return convertView;
         }
     }
 }
