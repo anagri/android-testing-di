@@ -2,8 +2,15 @@ package co.creativev.bootcamp.got;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.BaseColumns;
 
-public class GoTCharacter implements Parcelable {
+public class GoTCharacter implements Parcelable, BaseColumns {
+    public static final String NAME = "name";
+    public static final String RES_ID = "res_id";
+    public static final String FULL_RES_ID = "full_res_id";
+    public static final String HOUSE = "house";
+    public static final String HOUSE_RES_ID = "house_res_id";
+    public static final String DESCRIPTION = "description";
     public final String name;
     public final int resId;
     public final boolean alive;
