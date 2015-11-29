@@ -1,17 +1,20 @@
 package co.creativev.bootcamp.got;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
     public static class GoTCharacter {
         public final String name;
         public final int resId;
@@ -68,7 +71,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ((ListView) findViewById(R.id.list)).setAdapter(new GoTAdapter(this, GOT_CHARACTERS));
+        ListView list = (ListView) findViewById(R.id.list);
+        list.setAdapter(new GoTAdapter(this, GOT_CHARACTERS));
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                intent.putExtra(DetailActivity.EXTRA_INDEX, position % GOT_CHARACTERS.length);
+                startActivity(intent);
+            }
+        });
     }
 
     public static class GoTAdapter extends BaseAdapter {
