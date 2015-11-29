@@ -2,6 +2,7 @@ package co.creativev.bootcamp.got;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -41,9 +42,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     new GoTCharacter("Varys", R.drawable.varys, R.drawable.varys_full, true, "Lannister", R.drawable.lannister, "Varys, called the Spider, is an enigmatic member of the small council and the master of whisperers, or spymaster, for the Iron Throne of the Seven Kingdoms.")
             };
     public static final String GOT_TABLE = "got_characters";
+    private static DatabaseHelper instance;
 
-    public DatabaseHelper(Context context) {
+    private DatabaseHelper(Context context) {
         super(context, GOT_DB, null, VERSION);
+    }
+
+    public static DatabaseHelper getDatabaseHelper(Context context) {
+        if (instance == null)
+            instance = new DatabaseHelper(context);
+        return instance;
     }
 
     @Override
@@ -82,5 +90,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int getCount() {
         return (int) DatabaseUtils.longForQuery(getReadableDatabase(), "SELECT COUNT(*) from " + GOT_TABLE, null);
+    }
+
+    public Cursor getCharacterCursor() {
+        return getReadableDatabase().query(GOT_TABLE, GoTCharacter.ALL_COLS, null, null, null, null, null);
     }
 }

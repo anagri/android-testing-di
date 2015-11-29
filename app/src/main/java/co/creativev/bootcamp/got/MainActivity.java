@@ -2,9 +2,9 @@ package co.creativev.bootcamp.got;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +19,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        Log.d("GOT_APP", "Total rows in db " + databaseHelper.getCount());
         setContentView(R.layout.activity_main);
         ListView list = (ListView) findViewById(R.id.list);
-        list.setAdapter(new GoTAdapter(this, DatabaseHelper.GOT_CHARACTERS));
+        list.setAdapter(new GoTAdapter(this));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -35,22 +33,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class GoTAdapter extends BaseAdapter {
-        private final GoTCharacter[] characters;
         private final LayoutInflater inflater;
+        private final DatabaseHelper databaseHelper;
+        private final int count;
+        private final Cursor cursor;
 
-        public GoTAdapter(Context context, GoTCharacter[] characters) {
-            this.characters = characters;
+        public GoTAdapter(Context context) {
+            databaseHelper = DatabaseHelper.getDatabaseHelper(context);
+            count = databaseHelper.getCount();
+            cursor = databaseHelper.getCharacterCursor();
             inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return characters.length * 100;
+            return count;
         }
 
         @Override
         public GoTCharacter getItem(int position) {
-            return characters[position % characters.length];
+            cursor.moveToPosition(position);
+            return new GoTCharacter(
+                    cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.NAME)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(GoTCharacter.RES_ID)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(GoTCharacter.FULL_RES_ID)),
+                    true,
+                    cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.HOUSE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(GoTCharacter.HOUSE_RES_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.DESCRIPTION))
+            );
         }
 
         @Override

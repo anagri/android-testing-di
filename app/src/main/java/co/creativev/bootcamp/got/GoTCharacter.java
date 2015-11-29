@@ -11,6 +11,8 @@ public class GoTCharacter implements Parcelable, BaseColumns {
     public static final String HOUSE = "house";
     public static final String HOUSE_RES_ID = "house_res_id";
     public static final String DESCRIPTION = "description";
+    public static final String[] ALL_COLS = {_ID, NAME, RES_ID, FULL_RES_ID, HOUSE, HOUSE_RES_ID, DESCRIPTION};
+
     public final String name;
     public final int resId;
     public final boolean alive;
