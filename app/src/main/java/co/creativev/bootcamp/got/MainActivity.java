@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String LOG_TAG = "GOT_APP";
+    private GoTAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ListView list = (ListView) findViewById(R.id.list);
-        list.setAdapter(new GoTAdapter(this));
+        adapter = new GoTAdapter(this);
+        list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -32,26 +36,36 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.onStop();
+    }
+
     public static class GoTAdapter extends BaseAdapter {
         private final LayoutInflater inflater;
         private final DatabaseHelper databaseHelper;
-        private final int count;
-        private final Cursor cursor;
+        private Cursor cursor;
 
         public GoTAdapter(Context context) {
             databaseHelper = DatabaseHelper.getDatabaseHelper(context);
-            count = databaseHelper.getCount();
-            cursor = databaseHelper.getCharacterCursor();
             inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return count;
+            return cursor == null ? 0 : cursor.getCount();
         }
 
         @Override
         public GoTCharacter getItem(int position) {
+            if (cursor == null) return null;
             cursor.moveToPosition(position);
             return new GoTCharacter(
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.NAME)),
@@ -82,6 +96,22 @@ public class MainActivity extends AppCompatActivity {
             tag.name.setText(item.name);
             tag.image.setImageResource(item.resId);
             return convertView;
+        }
+
+        public void onStart() {
+            Log.d(LOG_TAG, "Adapter onStart");
+            closeCursorIfOpen();
+            cursor = databaseHelper.getCharacterCursor();
+            notifyDataSetChanged();
+        }
+
+        public void onStop() {
+            Log.d(LOG_TAG, "Adapter onStop");
+            closeCursorIfOpen();
+        }
+
+        private void closeCursorIfOpen() {
+            if (cursor != null && !cursor.isClosed()) cursor.close();
         }
     }
 
