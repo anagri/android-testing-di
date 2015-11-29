@@ -15,26 +15,6 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static class GoTCharacter {
-        public final String name;
-        public final int resId;
-        public final boolean alive;
-        public final int fullResId;
-        public final int houseResId;
-        public final String house;
-        public final String description;
-
-        public GoTCharacter(String name, int resId, int fullResId, boolean alive, String house, int houseResId, String description) {
-            this.name = name;
-            this.resId = resId;
-            this.alive = alive;
-            this.fullResId = fullResId;
-            this.houseResId = houseResId;
-            this.house = house;
-            this.description = description;
-        }
-    }
-
     public static final GoTCharacter[] GOT_CHARACTERS =
             {
                     new GoTCharacter("Arya Stark", R.drawable.arya, R.drawable.arya_full, true, "Stark", R.drawable.stark, "Arya Stark is the third child and second daughter of Lord Eddard Stark and Lady Catelyn Tully"),
@@ -77,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_INDEX, position % GOT_CHARACTERS.length);
+                intent.putExtra(DetailActivity.EXTRA_CHARACTER, GOT_CHARACTERS[position % GOT_CHARACTERS.length]);
                 startActivity(intent);
             }
         });

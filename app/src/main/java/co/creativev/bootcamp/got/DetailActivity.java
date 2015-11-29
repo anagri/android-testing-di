@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_INDEX = "index";
+    public static final String EXTRA_CHARACTER = "character";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +20,9 @@ public class DetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
-        int index = getIntent().getIntExtra(EXTRA_INDEX, 0);
-        MainActivity.GoTCharacter gotCharacter = MainActivity.GOT_CHARACTERS[index];
+        GoTCharacter gotCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
+        setTitle(gotCharacter.name);
         ((ImageView) findViewById(R.id.image_character)).setImageResource(gotCharacter.fullResId);
-        ((TextView) findViewById(R.id.text_name)).setText(gotCharacter.name);
         ((ImageView) findViewById(R.id.image_house)).setImageResource(gotCharacter.houseResId);
         ((TextView) findViewById(R.id.text_house_name)).setText(gotCharacter.house);
         ((TextView) findViewById(R.id.text_character_story)).setText(gotCharacter.description);
