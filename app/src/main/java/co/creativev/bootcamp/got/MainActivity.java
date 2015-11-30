@@ -21,7 +21,6 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "GOT_APP";
-    public static final String SERVERL_URL = "https://s3-ap-southeast-1.amazonaws.com/android-bootcamp-assets/";
 
     private GoTAdapter adapter;
 
@@ -148,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             });
             this.name.setText(gotCharacter.name);
             Picasso.with(context)
-                    .load(Uri.parse(SERVERL_URL + gotCharacter.thumbUrl))
+                    .load(Uri.parse(gotCharacter.thumbUrl))
                     .placeholder(R.drawable.profile_placeholder)
                     .error(R.drawable.profile_placeholder_error)
                     .into(this.image);

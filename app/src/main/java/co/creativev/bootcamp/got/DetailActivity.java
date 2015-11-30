@@ -26,12 +26,12 @@ public class DetailActivity extends AppCompatActivity {
         GoTCharacter gotCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
         setTitle(gotCharacter.name);
         Picasso.with(this)
-                .load(Uri.parse(MainActivity.SERVERL_URL + gotCharacter.fullUrl))
+                .load(Uri.parse(gotCharacter.fullUrl))
                 .placeholder(R.drawable.profile_placeholder_full)
                 .error(R.drawable.profile_placeholder_error_full)
                 .into((ImageView) findViewById(R.id.image_character));
         Picasso.with(this)
-                .load(Uri.parse(MainActivity.SERVERL_URL + gotCharacter.houseUrl))
+                .load(Uri.parse(gotCharacter.houseUrl))
                 .placeholder(R.drawable.house_placeholder)
                 .error(R.drawable.house_placeholder_error)
                 .into((ImageView) findViewById(R.id.image_house));
