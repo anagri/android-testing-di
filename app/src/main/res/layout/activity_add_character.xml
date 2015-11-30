@@ -32,6 +32,40 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </android.support.design.widget.TextInputLayout>
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_baratheon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/btn_baratheon"
+            android:padding="2dp" />
+
+        <RadioButton
+            android:id="@+id/radio_lannister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/btn_lannister"
+            android:padding="2dp" />
+
+        <RadioButton
+            android:id="@+id/radio_stark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/btn_stark"
+            android:padding="2dp" />
+
+        <RadioButton
+            android:id="@+id/radio_targaryen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/btn_targaryen"
+            android:padding="2dp" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/button_save"
         android:layout_width="wrap_content"
