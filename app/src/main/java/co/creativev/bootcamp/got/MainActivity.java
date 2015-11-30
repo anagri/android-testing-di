@@ -6,14 +6,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -28,17 +27,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView list = (ListView) findViewById(R.id.list);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         adapter = new GoTAdapter(this);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra(DetailActivity.EXTRA_CHARACTER, DatabaseHelper.GOT_CHARACTERS[position % DatabaseHelper.GOT_CHARACTERS.length]);
-                startActivity(intent);
-            }
-        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.got_cols)));
     }
 
     @Override
@@ -53,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         adapter.onStop();
     }
 
-    public static class GoTAdapter extends BaseAdapter {
+    public static class GoTAdapter extends RecyclerView.Adapter<GotViewHolder> {
         private final LayoutInflater inflater;
-        private final DatabaseHelper databaseHelper;
         private final Context context;
+        private final DatabaseHelper databaseHelper;
         private Cursor cursor;
 
         public GoTAdapter(Context context) {
@@ -66,15 +58,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getCount() {
-            return cursor == null ? 0 : cursor.getCount();
+        public GotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = inflater.inflate(R.layout.list_item_got, parent, false);
+            return new GotViewHolder(view, ((TextView) view.findViewById(R.id.text)), ((ImageView) view.findViewById(R.id.image_character)));
         }
 
         @Override
+        public void onBindViewHolder(GotViewHolder holder, int position) {
+            holder.bindItem(context, getItem(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return cursor == null || cursor.isClosed() ? 0 : cursor.getCount();
+        }
+
         public GoTCharacter getItem(int position) {
             if (cursor == null) return null;
             cursor.moveToPosition(position);
             return new GoTCharacter(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(GoTCharacter._ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.NAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.THUMB_URL)),
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.FULL_URL)),
@@ -87,33 +90,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = inflater.inflate(R.layout.list_item_got, parent, false);
-                TextView name = (TextView) convertView.findViewById(R.id.text);
-                ImageView image = (ImageView) convertView.findViewById(R.id.image_character);
-                convertView.setTag(new GotViewHolder(name, image));
-            }
-            GoTCharacter item = getItem(position);
-            GotViewHolder tag = (GotViewHolder) convertView.getTag();
-            tag.name.setText(item.name);
-            Picasso.with(context)
-                    .load(Uri.parse(SERVERL_URL + item.thumbUrl))
-                    .placeholder(R.drawable.profile_placeholder)
-                    .error(R.drawable.profile_placeholder_error)
-                    .into(tag.image);
-            return convertView;
+            return getItem(position).id;
         }
 
         public void onStart() {
             Log.d(LOG_TAG, "Adapter onStart");
-            closeCursorIfOpen();
-            cursor = databaseHelper.getCharacterCursor();
-            notifyDataSetChanged();
+            if (cursor == null || cursor.isClosed())
+                cursor = databaseHelper.getCharacterCursor();
+            notifyItemRangeChanged(0, cursor.getCount());
         }
 
         public void onStop() {
@@ -126,13 +110,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static class GotViewHolder {
+    public static class GotViewHolder extends RecyclerView.ViewHolder {
         private final TextView name;
         private final ImageView image;
 
-        public GotViewHolder(TextView name, ImageView image) {
+        public GotViewHolder(View view, TextView name, ImageView image) {
+            super(view);
             this.name = name;
             this.image = image;
+        }
+
+        public void bindItem(final Context context, final GoTCharacter gotCharacter) {
+            this.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra(DetailActivity.EXTRA_CHARACTER, gotCharacter);
+                    context.startActivity(intent);
+                }
+            });
+            this.name.setText(gotCharacter.name);
+            Picasso.with(context)
+                    .load(Uri.parse(SERVERL_URL + gotCharacter.thumbUrl))
+                    .placeholder(R.drawable.profile_placeholder)
+                    .error(R.drawable.profile_placeholder_error)
+                    .into(this.image);
         }
     }
 }
