@@ -18,17 +18,24 @@
         android:scaleType="fitCenter"
         android:src="@drawable/profile_placeholder_full" />
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <!--<EditText-->
-            <!--android:id="@+id/text_character_name"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Name"-->
-            <!--android:paddingBottom="8dp"-->
-            <!--android:paddingTop="8dp"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
+        <EditText
+            android:id="@+id/text_character_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|end"
+        android:text="Save" />
 </LinearLayout>

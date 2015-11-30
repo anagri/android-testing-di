@@ -6,9 +6,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 public class AddCharacterActivity extends AppCompatActivity {
@@ -20,6 +23,11 @@ public class AddCharacterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_character);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         setTitle("Add GoT Character");
         imageView = (ImageView) findViewById(R.id.image_character);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +39,27 @@ public class AddCharacterActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent, CHOOSE_IMAGE);
             }
         });
+
+        findViewById(R.id.button_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText inputCharacter = (EditText) findViewById(R.id.text_character_name);
+                String name = inputCharacter.getText().toString();
+                if (name.isEmpty()) {
+                    inputCharacter.setError("Cannot be empty");
+                    return;
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
