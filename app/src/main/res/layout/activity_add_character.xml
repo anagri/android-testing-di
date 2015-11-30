@@ -33,6 +33,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <RadioGroup
+        android:id="@+id/radio_group_house"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

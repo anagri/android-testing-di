@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class AddCharacterActivity extends AppCompatActivity {
 
@@ -41,7 +43,7 @@ public class AddCharacterActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent, CHOOSE_IMAGE);
             }
         });
-
+        final RadioGroup radioGroupHouse = (RadioGroup) findViewById(R.id.radio_group_house);
         findViewById(R.id.button_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +53,8 @@ public class AddCharacterActivity extends AppCompatActivity {
                     inputCharacter.setError("Cannot be empty");
                     return;
                 }
-                if (imageView.getTag() == null) {
+                String imagePath = (String) imageView.getTag();
+                if (imagePath == null) {
                     new AlertDialog.Builder(AddCharacterActivity.this)
                             .setTitle("Error")
                             .setMessage("Image is not selected")
@@ -65,8 +68,47 @@ public class AddCharacterActivity extends AppCompatActivity {
                             .show();
                     return;
                 }
+                int selectedHouse = radioGroupHouse.getCheckedRadioButtonId();
+                if (selectedHouse == -1) {
+                    new AlertDialog.Builder(AddCharacterActivity.this)
+                            .setTitle("Error")
+                            .setMessage("House is not selected")
+                            .setCancelable(true)
+                            .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                    return;
+                }
+                int houseResId = getHouseResId(selectedHouse);
+                DatabaseHelper databaseHelper = DatabaseHelper.getDatabaseHelper(AddCharacterActivity.this);
+                long id = databaseHelper.insert(new GoTCharacter(name, imagePath, imagePath, true, "New", houseResId, "Lorem"));
+                if (id == -1) {
+                    Log.e(MainActivity.LOG_TAG, "Error while inserting data");
+                } else {
+                    Toast.makeText(AddCharacterActivity.this, "Inserted new character", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
+    }
+
+    public int getHouseResId(int radioButtonId) {
+        switch (radioButtonId) {
+            case R.id.radio_baratheon:
+                return R.drawable.baratheon;
+            case R.id.radio_lannister:
+                return R.drawable.lannister;
+            case R.id.radio_stark:
+                return R.drawable.stark;
+            case R.id.radio_targaryen:
+                return R.drawable.targaryen;
+            default:
+                throw new IllegalArgumentException("No icon found for radio button " + radioButtonId);
+        }
     }
 
     @Override
@@ -90,7 +132,7 @@ public class AddCharacterActivity extends AppCompatActivity {
             String picturePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
             cursor.close();
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            imageView.setTag(picturePath);
+            imageView.setTag("file:///" + picturePath);
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);

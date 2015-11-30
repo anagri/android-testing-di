@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.FULL_URL)),
                     true,
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.HOUSE)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.HOUSE_URL)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(GoTCharacter.HOUSE_RES_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.DESCRIPTION))
             );
         }

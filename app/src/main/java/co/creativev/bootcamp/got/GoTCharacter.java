@@ -9,30 +9,30 @@ public class GoTCharacter implements Parcelable, BaseColumns {
     public static final String THUMB_URL = "thumb_url";
     public static final String FULL_URL = "full_url";
     public static final String HOUSE = "house";
-    public static final String HOUSE_URL = "house_url";
+    public static final String HOUSE_RES_ID = "house_res_id";
     public static final String DESCRIPTION = "description";
-    public static final String[] ALL_COLS = {_ID, NAME, THUMB_URL, FULL_URL, HOUSE, HOUSE_URL, DESCRIPTION};
+    public static final String[] ALL_COLS = {_ID, NAME, THUMB_URL, FULL_URL, HOUSE, HOUSE_RES_ID, DESCRIPTION};
 
     public final int id;
     public final String name;
     public final String thumbUrl;
     public final boolean alive;
     public final String fullUrl;
-    public final String houseUrl;
+    public final int houseResId;
     public final String house;
     public final String description;
 
-    public GoTCharacter(String name, String thumbUrl, String fullUrl, boolean alive, String house, String houseUrl, String description) {
-        this(0, name, thumbUrl, fullUrl, alive, house, houseUrl, description);
+    public GoTCharacter(String name, String thumbUrl, String fullUrl, boolean alive, String house, int houseResId, String description) {
+        this(0, name, thumbUrl, fullUrl, alive, house, houseResId, description);
     }
 
-    public GoTCharacter(int id, String name, String thumbUrl, String fullUrl, boolean alive, String house, String houseUrl, String description) {
+    public GoTCharacter(int id, String name, String thumbUrl, String fullUrl, boolean alive, String house, int houseResId, String description) {
         this.id = id;
         this.name = name;
         this.thumbUrl = thumbUrl;
         this.alive = alive;
         this.fullUrl = fullUrl;
-        this.houseUrl = houseUrl;
+        this.houseResId = houseResId;
         this.house = house;
         this.description = description;
     }
@@ -49,7 +49,7 @@ public class GoTCharacter implements Parcelable, BaseColumns {
         dest.writeString(this.thumbUrl);
         dest.writeByte(alive ? (byte) 1 : (byte) 0);
         dest.writeString(this.fullUrl);
-        dest.writeString(this.houseUrl);
+        dest.writeInt(this.houseResId);
         dest.writeString(this.house);
         dest.writeString(this.description);
     }
@@ -60,7 +60,7 @@ public class GoTCharacter implements Parcelable, BaseColumns {
         this.thumbUrl = in.readString();
         this.alive = in.readByte() != 0;
         this.fullUrl = in.readString();
-        this.houseUrl = in.readString();
+        this.houseResId = in.readInt();
         this.house = in.readString();
         this.description = in.readString();
     }
