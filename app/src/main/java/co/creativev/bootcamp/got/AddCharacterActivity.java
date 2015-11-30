@@ -1,5 +1,7 @@
 package co.creativev.bootcamp.got;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
@@ -49,6 +51,20 @@ public class AddCharacterActivity extends AppCompatActivity {
                     inputCharacter.setError("Cannot be empty");
                     return;
                 }
+                if (imageView.getTag() == null) {
+                    new AlertDialog.Builder(AddCharacterActivity.this)
+                            .setTitle("Error")
+                            .setMessage("Image is not selected")
+                            .setCancelable(true)
+                            .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                    return;
+                }
             }
         });
     }
@@ -74,7 +90,7 @@ public class AddCharacterActivity extends AppCompatActivity {
             String picturePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
             cursor.close();
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
+            imageView.setTag(picturePath);
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
