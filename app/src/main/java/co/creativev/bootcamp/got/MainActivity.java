@@ -94,10 +94,11 @@ public class MainActivity extends AppCompatActivity {
             cursor.moveToPosition(position);
             return new GoTCharacter(
                     cursor.getInt(cursor.getColumnIndexOrThrow(GoTCharacter._ID)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.FIRST_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.LAST_NAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.THUMB_URL)),
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.FULL_URL)),
-                    true,
+                    cursor.getInt(cursor.getColumnIndexOrThrow(GoTCharacter.ALIVE)) == 1,
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.HOUSE)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(GoTCharacter.HOUSE_RES_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(GoTCharacter.DESCRIPTION))
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     context.startActivity(intent);
                 }
             });
-            this.name.setText(gotCharacter.name);
+            this.name.setText(gotCharacter.name());
             Picasso.with(context)
                     .load(Uri.parse(gotCharacter.thumbUrl))
                     .placeholder(R.drawable.profile_placeholder)

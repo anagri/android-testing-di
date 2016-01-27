@@ -3,11 +3,9 @@ package co.creativev.bootcamp.got;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -85,7 +83,15 @@ public class AddCharacterActivity extends AppCompatActivity {
                 }
                 int houseResId = getHouseResId(selectedHouse);
                 DatabaseHelper databaseHelper = DatabaseHelper.getDatabaseHelper(AddCharacterActivity.this);
-                long id = databaseHelper.insert(new GoTCharacter(name, imagePath, imagePath, true, "New", houseResId, "Lorem"));
+                String[] names = name.split(" ");
+                String firstName = names[0];
+                String lastName;
+                if (names.length > 1) {
+                    lastName = name.substring(name.indexOf(" "));
+                } else {
+                    lastName = "Unknown";
+                }
+                long id = databaseHelper.insert(new GoTCharacter(firstName, lastName, imagePath, true, "New", houseResId, "Lorem", imagePath));
                 if (id == -1) {
                     Log.e(MainActivity.LOG_TAG, "Error while inserting data");
                 } else {
@@ -126,13 +132,14 @@ public class AddCharacterActivity extends AppCompatActivity {
             Log.d(MainActivity.LOG_TAG, "Received " + data);
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            String picturePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
-            cursor.close();
+//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//            String picturePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
+//            cursor.close();
+            String picturePath = selectedImage.getPath();
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            imageView.setTag("file:///" + picturePath);
+            imageView.setTag("file://" + picturePath);
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
