@@ -17,14 +17,14 @@ public class GoTCharacter implements Parcelable, BaseColumns {
     public static final String[] ALL_COLS = {_ID, FIRST_NAME, LAST_NAME, ALIVE, THUMB_URL, FULL_URL, HOUSE, HOUSE_RES_ID, DESCRIPTION};
 
     public final int id;
-    public final String firstName;
-    public final String lastName;
-    public final String thumbUrl;
-    public final boolean alive;
-    public final String fullUrl;
-    public final int houseResId;
-    public final String house;
-    public final String description;
+    private final String firstName;
+    private final String lastName;
+    private final String thumbUrl;
+    private final boolean alive;
+    private final String fullUrl;
+    private final int houseResId;
+    private final String house;
+    private final String description;
 
     public GoTCharacter(String firstName, String lastName, String fullUrl, boolean alive, String house, int houseResId, String description, String thumbUrl) {
         this(0, firstName, lastName, thumbUrl, fullUrl, alive, house, houseResId, description);
@@ -40,6 +40,38 @@ public class GoTCharacter implements Parcelable, BaseColumns {
         this.houseResId = houseResId;
         this.house = house;
         this.description = description;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getThumbUrl() {
+        return thumbUrl;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public String getFullUrl() {
+        return fullUrl;
+    }
+
+    public int getHouseResId() {
+        return houseResId;
+    }
+
+    public String getHouse() {
+        return house;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override

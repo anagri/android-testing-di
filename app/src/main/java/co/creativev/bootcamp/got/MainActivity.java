@@ -146,9 +146,9 @@ public class MainActivity extends AppCompatActivity {
                     context.startActivity(intent);
                 }
             });
-            this.name.setText(gotCharacter.firstName + " " + gotCharacter.lastName);
+            this.name.setText(gotCharacter.getFirstName() + " " + gotCharacter.getLastName());
             Picasso.with(context)
-                    .load(Uri.parse(gotCharacter.thumbUrl))
+                    .load(Uri.parse(gotCharacter.getThumbUrl()))
                     .placeholder(R.drawable.profile_placeholder)
                     .error(R.drawable.profile_placeholder_error)
                     .into(this.image);

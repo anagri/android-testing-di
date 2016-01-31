@@ -99,14 +99,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private long insertCharacter(SQLiteDatabase db, GoTCharacter gotCharacter) {
         ContentValues values = new ContentValues();
-        values.put(GoTCharacter.FIRST_NAME, gotCharacter.firstName);
-        values.put(GoTCharacter.LAST_NAME, gotCharacter.lastName);
-        values.put(GoTCharacter.THUMB_URL, gotCharacter.thumbUrl);
-        values.put(GoTCharacter.FULL_URL, gotCharacter.fullUrl);
-        values.put(GoTCharacter.HOUSE, gotCharacter.house);
-        values.put(GoTCharacter.ALIVE, gotCharacter.alive ? 1 : 0);
-        values.put(GoTCharacter.HOUSE_RES_ID, gotCharacter.houseResId);
-        values.put(GoTCharacter.DESCRIPTION, gotCharacter.description);
+        values.put(GoTCharacter.FIRST_NAME, gotCharacter.getFirstName());
+        values.put(GoTCharacter.LAST_NAME, gotCharacter.getLastName());
+        values.put(GoTCharacter.THUMB_URL, gotCharacter.getThumbUrl());
+        values.put(GoTCharacter.FULL_URL, gotCharacter.getFullUrl());
+        values.put(GoTCharacter.HOUSE, gotCharacter.getHouse());
+        values.put(GoTCharacter.ALIVE, gotCharacter.isAlive() ? 1 : 0);
+        values.put(GoTCharacter.HOUSE_RES_ID, gotCharacter.getHouseResId());
+        values.put(GoTCharacter.DESCRIPTION, gotCharacter.getDescription());
         return db.insert(GOT_TABLE, null, values);
     }
 }
