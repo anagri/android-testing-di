@@ -3,9 +3,11 @@ package co.creativev.bootcamp.got;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -132,14 +134,21 @@ public class AddCharacterActivity extends AppCompatActivity {
             Log.d(MainActivity.LOG_TAG, "Received " + data);
 
             Uri selectedImage = data.getData();
-//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-//            cursor.moveToFirst();
-//            String picturePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
-//            cursor.close();
-            String picturePath = selectedImage.getPath();
+            String picturePath;
+            String tag;
+            if ("content".equals(selectedImage.getScheme())) {
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                picturePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
+                cursor.close();
+                tag = "file://" + picturePath;
+            } else {
+                picturePath = selectedImage.getPath();
+                tag = "file:///" + picturePath;
+            }
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            imageView.setTag("file://" + picturePath);
+            imageView.setTag(tag);
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
