@@ -15,6 +15,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_CHARACTER = "character";
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
