@@ -18,4 +18,18 @@ public class GoTCharacterViewModel {
     public int getDescriptionColor() {
         return goTCharacter.alive ? Color.GREEN : Color.RED;
     }
+
+    public int getHouseResId() {
+        return goTCharacter.getHouseResId();
+    }
+
+    @SuppressWarnings({"unused", "databinding"})
+    public String getHouse() {
+        return goTCharacter.getHouse();
+    }
+
+    @SuppressWarnings({"unused", "databinding"})
+    public String getDescription() {
+        return goTCharacter.getDescription();
+    }
 }
