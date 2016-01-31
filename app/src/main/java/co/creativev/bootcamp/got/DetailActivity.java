@@ -24,18 +24,18 @@ public class DetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
-        GoTCharacter gotCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
-        setTitle(gotCharacter.firstName + " " + gotCharacter.lastName);
+        GoTCharacter goTCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
+        setTitle(goTCharacter.firstName + " " + goTCharacter.lastName);
         Picasso.with(this)
-                .load(Uri.parse(gotCharacter.fullUrl))
+                .load(Uri.parse(goTCharacter.fullUrl))
                 .placeholder(R.drawable.profile_placeholder_full)
                 .error(R.drawable.profile_placeholder_error_full)
                 .into((ImageView) findViewById(R.id.image_character));
-        ((ImageView) findViewById(R.id.image_house)).setImageResource(gotCharacter.houseResId);
-        ((TextView) findViewById(R.id.text_house_name)).setText(gotCharacter.house);
+        ((ImageView) findViewById(R.id.image_house)).setImageResource(goTCharacter.houseResId);
+        ((TextView) findViewById(R.id.text_house_name)).setText(goTCharacter.house);
         TextView characterDetails = (TextView) findViewById(R.id.text_character_story);
-        characterDetails.setText(gotCharacter.description);
-        int color = gotCharacter.alive ? Color.GREEN : Color.RED;
+        characterDetails.setText(goTCharacter.description);
+        int color = goTCharacter.alive ? Color.GREEN : Color.RED;
         characterDetails.setTextColor(color);
     }
 
