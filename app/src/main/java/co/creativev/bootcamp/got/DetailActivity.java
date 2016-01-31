@@ -25,7 +25,8 @@ public class DetailActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
         }
         GoTCharacter goTCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
-        setTitle(goTCharacter.firstName + " " + goTCharacter.lastName);
+        GoTCharacterViewModel goTCharacterViewModel = new GoTCharacterViewModel(goTCharacter);
+        setTitle(goTCharacterViewModel.getTitle());
         Picasso.with(this)
                 .load(Uri.parse(goTCharacter.fullUrl))
                 .placeholder(R.drawable.profile_placeholder_full)
@@ -35,7 +36,7 @@ public class DetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.text_house_name)).setText(goTCharacter.house);
         TextView characterDetails = (TextView) findViewById(R.id.text_character_story);
         characterDetails.setText(goTCharacter.description);
-        int color = goTCharacter.alive ? Color.GREEN : Color.RED;
+        int color = goTCharacterViewModel.getDescriptionColor();
         characterDetails.setTextColor(color);
     }
 
