@@ -2,18 +2,20 @@ package co.creativev.bootcamp.got;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AddCharacterPresenterTest {
-
-    private AddCharacterView mockView;
+    @Mock
+    AddCharacterView mockView;
     private AddCharacterPresenter presenter;
 
     @Before
     public void setUp() throws Exception {
-        mockView = mock(AddCharacterView.class);
         presenter = new AddCharacterPresenter(mockView);
     }
 
