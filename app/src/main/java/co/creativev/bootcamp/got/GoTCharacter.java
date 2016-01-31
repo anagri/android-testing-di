@@ -82,16 +82,4 @@ public class GoTCharacter implements Parcelable, BaseColumns {
         }
     };
 
-    public String name() {
-        return firstName + " " + lastName;
-    }
-
-    public int color() {
-        int color;
-        if (alive)
-            color = Color.GREEN;
-        else
-            color = Color.RED;
-        return color;
-    }
 }

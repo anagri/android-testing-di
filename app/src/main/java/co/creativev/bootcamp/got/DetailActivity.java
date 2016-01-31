@@ -1,5 +1,6 @@
 package co.creativev.bootcamp.got;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -24,7 +25,7 @@ public class DetailActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
         }
         GoTCharacter gotCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
-        setTitle(gotCharacter.name());
+        setTitle(gotCharacter.firstName + " " + gotCharacter.lastName);
         Picasso.with(this)
                 .load(Uri.parse(gotCharacter.fullUrl))
                 .placeholder(R.drawable.profile_placeholder_full)
@@ -34,7 +35,8 @@ public class DetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.text_house_name)).setText(gotCharacter.house);
         TextView characterDetails = (TextView) findViewById(R.id.text_character_story);
         characterDetails.setText(gotCharacter.description);
-        characterDetails.setTextColor(gotCharacter.color());
+        int color = gotCharacter.alive ? Color.GREEN : Color.RED;
+        characterDetails.setTextColor(color);
     }
 
     @Override
