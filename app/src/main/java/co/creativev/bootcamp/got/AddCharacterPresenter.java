@@ -2,9 +2,11 @@ package co.creativev.bootcamp.got;
 
 public class AddCharacterPresenter {
     private final AddCharacterView view;
+    private DatabaseHelper databaseHelper;
 
-    public AddCharacterPresenter(AddCharacterView view) {
+    public AddCharacterPresenter(AddCharacterView view, DatabaseHelper databaseHelper) {
         this.view = view;
+        this.databaseHelper = databaseHelper;
     }
 
     public void addCharacter(String name, String imagePath, int selectedHouse) {
@@ -30,12 +32,11 @@ public class AddCharacterPresenter {
 
     private void addCharacterToDb(String name, String imagePath, int selectedHouse) {
         int houseResId = getHouseResId(selectedHouse);
-        DatabaseHelper databaseHelper = DatabaseHelper.getDatabaseHelper(null);
         String[] names = name.split(" ");
         String firstName = names[0];
         String lastName;
         if (names.length > 1) {
-            lastName = name.substring(name.indexOf(" "));
+            lastName = name.substring(name.indexOf(" ") + 1);
         } else {
             lastName = "Unknown";
         }
