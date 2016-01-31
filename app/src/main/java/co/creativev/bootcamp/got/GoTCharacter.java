@@ -1,20 +1,24 @@
 package co.creativev.bootcamp.got;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.BaseColumns;
 
 public class GoTCharacter implements Parcelable, BaseColumns {
-    public static final String NAME = "name";
+    public static final String FIRST_NAME = "first_name";
+    public static final String LAST_NAME = "last_name";
     public static final String THUMB_URL = "thumb_url";
     public static final String FULL_URL = "full_url";
     public static final String HOUSE = "house";
+    public static final String ALIVE = "alive";
     public static final String HOUSE_RES_ID = "house_res_id";
     public static final String DESCRIPTION = "description";
-    public static final String[] ALL_COLS = {_ID, NAME, THUMB_URL, FULL_URL, HOUSE, HOUSE_RES_ID, DESCRIPTION};
+    public static final String[] ALL_COLS = {_ID, FIRST_NAME, LAST_NAME, ALIVE, THUMB_URL, FULL_URL, HOUSE, HOUSE_RES_ID, DESCRIPTION};
 
     public final int id;
-    public final String name;
+    public final String firstName;
+    public final String lastName;
     public final String thumbUrl;
     public final boolean alive;
     public final String fullUrl;
@@ -22,13 +26,14 @@ public class GoTCharacter implements Parcelable, BaseColumns {
     public final String house;
     public final String description;
 
-    public GoTCharacter(String name, String thumbUrl, String fullUrl, boolean alive, String house, int houseResId, String description) {
-        this(0, name, thumbUrl, fullUrl, alive, house, houseResId, description);
+    public GoTCharacter(String firstName, String lastName, String fullUrl, boolean alive, String house, int houseResId, String description, String thumbUrl) {
+        this(0, firstName, lastName, thumbUrl, fullUrl, alive, house, houseResId, description);
     }
 
-    public GoTCharacter(int id, String name, String thumbUrl, String fullUrl, boolean alive, String house, int houseResId, String description) {
+    public GoTCharacter(int id, String firstName, String lastName, String thumbUrl, String fullUrl, boolean alive, String house, int houseResId, String description) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.thumbUrl = thumbUrl;
         this.alive = alive;
         this.fullUrl = fullUrl;
@@ -45,7 +50,8 @@ public class GoTCharacter implements Parcelable, BaseColumns {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeString(this.name);
+        dest.writeString(this.firstName);
+        dest.writeString(this.lastName);
         dest.writeString(this.thumbUrl);
         dest.writeByte(alive ? (byte) 1 : (byte) 0);
         dest.writeString(this.fullUrl);
@@ -56,7 +62,8 @@ public class GoTCharacter implements Parcelable, BaseColumns {
 
     protected GoTCharacter(Parcel in) {
         this.id = in.readInt();
-        this.name = in.readString();
+        this.firstName = in.readString();
+        this.lastName = in.readString();
         this.thumbUrl = in.readString();
         this.alive = in.readByte() != 0;
         this.fullUrl = in.readString();
@@ -74,4 +81,17 @@ public class GoTCharacter implements Parcelable, BaseColumns {
             return new GoTCharacter[size];
         }
     };
+
+    public String name() {
+        return firstName + " " + lastName;
+    }
+
+    public int color() {
+        int color;
+        if (alive)
+            color = Color.GREEN;
+        else
+            color = Color.RED;
+        return color;
+    }
 }
