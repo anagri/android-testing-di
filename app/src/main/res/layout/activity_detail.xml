@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context="co.creativev.bootcamp.got.DetailActivity"
     tools:ignore="ContentDescription">
+
+    <data>
+
+        <variable
+            name="goTCharacterViewModel"
+            type="co.creativev.bootcamp.got.GoTCharacterViewModel" />
+    </data>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/image_character"
@@ -38,6 +47,8 @@
         android:layout_toEndOf="@+id/image_house"
         android:layout_toRightOf="@+id/image_house"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@{goTCharacterViewModel.description}"
+        android:textColor="@{goTCharacterViewModel.descriptionColor}"
         tools:text="Arya Stark is the third child and second daughter of Lord Eddard Stark and Lady Catelyn Tully." />
 
     <TextView
@@ -52,6 +63,8 @@
         android:layout_marginTop="4dp"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@{goTCharacterViewModel.house}"
         tools:text="Stark" />
 
 </RelativeLayout>
+</layout>
