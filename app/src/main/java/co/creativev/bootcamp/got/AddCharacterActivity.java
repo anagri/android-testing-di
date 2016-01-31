@@ -30,7 +30,7 @@ public class AddCharacterActivity extends AppCompatActivity implements AddCharac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_character);
-        presenter = new AddCharacterPresenter(this);
+        presenter = new AddCharacterPresenter(this, DatabaseHelper.getDatabaseHelper(this));
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
