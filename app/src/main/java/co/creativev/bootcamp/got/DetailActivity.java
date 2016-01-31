@@ -26,12 +26,9 @@ public class DetailActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
         }
         GoTCharacter goTCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
-<<<<<<< 501ed3b2f8418e76051bade7eea606d08d722fad
         setTitle(goTCharacter.getFirstName() + " " + goTCharacter.getLastName());
-=======
         GoTCharacterViewModel goTCharacterViewModel = new GoTCharacterViewModel(goTCharacter);
         setTitle(goTCharacterViewModel.getTitle());
->>>>>>> gotviewmodel tests
         Picasso.with(this)
                 .load(Uri.parse(goTCharacter.getFullUrl()))
                 .placeholder(R.drawable.profile_placeholder_full)
