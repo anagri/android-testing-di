@@ -1,0 +1,21 @@
+package co.creativev.bootcamp.got;
+
+import android.graphics.Color;
+import android.support.annotation.NonNull;
+
+public class GoTCharacterViewModel {
+    private final GoTCharacter goTCharacter;
+
+    public GoTCharacterViewModel(GoTCharacter goTCharacter) {
+        this.goTCharacter = goTCharacter;
+    }
+
+    @NonNull
+    public String getTitle() {
+        return goTCharacter.firstName + " " + goTCharacter.lastName;
+    }
+
+    public int getDescriptionColor() {
+        return goTCharacter.alive ? Color.GREEN : Color.RED;
+    }
+}

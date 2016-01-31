@@ -25,7 +25,12 @@ public class DetailActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
         }
         GoTCharacter goTCharacter = getIntent().getParcelableExtra(EXTRA_CHARACTER);
+<<<<<<< 501ed3b2f8418e76051bade7eea606d08d722fad
         setTitle(goTCharacter.getFirstName() + " " + goTCharacter.getLastName());
+=======
+        GoTCharacterViewModel goTCharacterViewModel = new GoTCharacterViewModel(goTCharacter);
+        setTitle(goTCharacterViewModel.getTitle());
+>>>>>>> gotviewmodel tests
         Picasso.with(this)
                 .load(Uri.parse(goTCharacter.getFullUrl()))
                 .placeholder(R.drawable.profile_placeholder_full)
@@ -35,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.text_house_name)).setText(goTCharacter.getHouse());
         TextView characterDetails = (TextView) findViewById(R.id.text_character_story);
         characterDetails.setText(goTCharacter.getDescription());
-        int color = goTCharacter.isAlive() ? Color.GREEN : Color.RED;
+        int color = goTCharacterViewModel.getDescriptionColor();
         characterDetails.setTextColor(color);
     }
 
