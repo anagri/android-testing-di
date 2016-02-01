@@ -109,4 +109,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(GoTCharacter.DESCRIPTION, gotCharacter.getDescription());
         return db.insert(GOT_TABLE, null, values);
     }
+
+    public void reset() {
+        onUpgrade(getWritableDatabase(), 0, VERSION);
+    }
 }
