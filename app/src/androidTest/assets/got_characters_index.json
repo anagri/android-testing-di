@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "first_name": "Test",
+    "last_name": "User 1",
+    "thumb_url": "https://s3-ap-southeast-1.amazonaws.com/android-bootcamp-assets/arya.jpg",
+    "full_url": "https://s3-ap-southeast-1.amazonaws.com/android-bootcamp-assets/arya_full.jpg",
+    "house_id": 1,
+    "description": "Arya Stark is the third child and second daughter of Lord Eddard Stark and Lady Catelyn Tully",
+    "url": "http://gotapp-t.tunnlr.com/got_characters/1.json",
+    "alive": true
+  },
+  {
+    "id": 2,
+    "first_name": "Test",
+    "last_name": "User 2",
+    "thumb_url": "https://s3-ap-southeast-1.amazonaws.com/android-bootcamp-assets/bran.jpg",
+    "full_url": "https://s3-ap-southeast-1.amazonaws.com/android-bootcamp-assets/bran_full.jpg",
+    "house_id": 1,
+    "description": "Brandon Stark, typically called Bran, is the second son of Lord Eddard Stark and Lady Catelyn Tully.",
+    "url": "http://gotapp-t.tunnlr.com/got_characters/2.json",
+    "alive": true
+  },
+  {
+    "id": 3,
+    "first_name": "Test",
+    "last_name": "User 3",
+    "thumb_url": "https://s3-ap-southeast-1.amazonaws.com/android-bootcamp-assets/brienne.jpg",
+    "full_url": "https://s3-ap-southeast-1.amazonaws.com/android-bootcamp-assets/brienne_full.jpg",
+    "house_id": 1,
+    "description": "Brienne is sometimes called the Maid of Tarth and mocked as Brienne the Beauty.",
+    "url": "http://gotapp-t.tunnlr.com/got_characters/3.json",
+    "alive": true
+  }
+]
