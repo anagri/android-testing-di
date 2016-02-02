@@ -3,11 +3,11 @@ package co.creativev.bootcamp.got;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "GOT_APP";
@@ -16,12 +16,16 @@ public class MainActivity extends AppCompatActivity {
     private GoTListOnlineAdapter adapter;
 //    private GoTRecyclerOnlineAdapter goTRecyclerOnlineAdapter;
 
+    @Inject
+    GoTService goTService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
 //        adapter = new GoTListAdapter(this, DatabaseHelper.getDatabaseHelper(this));
-        adapter = new GoTListOnlineAdapter(this, ((GoTApplication) getApplication()).getGoTService());
+        ((GoTApplication) getApplication()).getGoTAppDeps().inject(this);
+        adapter = new GoTListOnlineAdapter(this, goTService);
 
 //        goTRecyclerOnlineAdapter = new GoTRecyclerOnlineAdapter(this, ((GoTApplication) getApplication()).getGoTService());
 //        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
