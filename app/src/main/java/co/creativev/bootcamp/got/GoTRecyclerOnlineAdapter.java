@@ -15,14 +15,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoTOnlineAdapter extends RecyclerView.Adapter<MainActivity.GotViewHolder> {
+public class GoTRecyclerOnlineAdapter extends RecyclerView.Adapter<GoTRecyclerAdapter.GotViewHolder> {
     private final List<GoTCharacter> characters;
     private final LayoutInflater inflater;
     private final Context context;
     private final GoTService goTService;
     private int page = 0;
 
-    public GoTOnlineAdapter(Context context, GoTService goTService) {
+    public GoTRecyclerOnlineAdapter(Context context, GoTService goTService) {
         this.context = context;
         this.goTService = goTService;
         characters = new ArrayList<>();
@@ -30,13 +30,13 @@ public class GoTOnlineAdapter extends RecyclerView.Adapter<MainActivity.GotViewH
     }
 
     @Override
-    public MainActivity.GotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GoTRecyclerAdapter.GotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.list_item_got, parent, false);
-        return new MainActivity.GotViewHolder(view, ((TextView) view.findViewById(R.id.text)), ((ImageView) view.findViewById(R.id.image_character)));
+        return new GoTRecyclerAdapter.GotViewHolder(view, ((TextView) view.findViewById(R.id.text)), ((ImageView) view.findViewById(R.id.image_character)));
     }
 
     @Override
-    public void onBindViewHolder(MainActivity.GotViewHolder holder, int position) {
+    public void onBindViewHolder(GoTRecyclerAdapter.GotViewHolder holder, int position) {
         if (position == getItemCount() - 1) {
             holder.loadMoreView(new View.OnClickListener() {
                 @Override
@@ -47,6 +47,14 @@ public class GoTOnlineAdapter extends RecyclerView.Adapter<MainActivity.GotViewH
         } else {
             holder.bindItem(context, characters.get(position));
         }
+    }
+
+    public void onStart() {
+
+    }
+
+    public void onStop() {
+
     }
 
     @Override
