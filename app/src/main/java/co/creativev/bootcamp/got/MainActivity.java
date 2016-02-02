@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "GOT_APP";
 
-    private GoTAdapter adapter;
+//    private GoTAdapter adapter;
     private GoTOnlineAdapter goTOnlineAdapter;
 
     @Override
@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
-        adapter = new GoTAdapter(this, DatabaseHelper.getDatabaseHelper(this));
-//        goTOnlineAdapter = new GoTOnlineAdapter(this, ((GoTApplication) getApplication()).getGoTService());
+//        adapter = new GoTAdapter(this, DatabaseHelper.getDatabaseHelper(this));
+        goTOnlineAdapter = new GoTOnlineAdapter(this, ((GoTApplication) getApplication()).getGoTService());
         recyclerView.setAdapter(goTOnlineAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.got_cols)));
     }
@@ -39,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        adapter.onStart();
+//        adapter.onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        adapter.onStop();
+//        adapter.onStop();
     }
 
     @Override
