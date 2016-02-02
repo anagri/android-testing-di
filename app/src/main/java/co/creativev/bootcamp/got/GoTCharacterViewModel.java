@@ -12,11 +12,11 @@ public class GoTCharacterViewModel {
 
     @NonNull
     public String getTitle() {
-        return goTCharacter.firstName + " " + goTCharacter.lastName;
+        return goTCharacter.getFirstName() + " " + goTCharacter.getLastName();
     }
 
     public int getDescriptionColor() {
-        return goTCharacter.alive ? Color.GREEN : Color.RED;
+        return goTCharacter.isAlive() ? Color.GREEN : Color.RED;
     }
 
     public int getHouseResId() {
