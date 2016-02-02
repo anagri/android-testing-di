@@ -23,14 +23,16 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "GOT_APP";
 
     private GoTAdapter adapter;
+    private GoTOnlineAdapter goTOnlineAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
-        adapter = new GoTAdapter(this);
-        recyclerView.setAdapter(adapter);
+        adapter = new GoTAdapter(this, DatabaseHelper.getDatabaseHelper(this));
+//        goTOnlineAdapter = new GoTOnlineAdapter(this, ((GoTApplication) getApplication()).getGoTService());
+        recyclerView.setAdapter(goTOnlineAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.got_cols)));
     }
 
@@ -67,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         private final DatabaseHelper databaseHelper;
         private Cursor cursor;
 
-        public GoTAdapter(Context context) {
+        public GoTAdapter(Context context, DatabaseHelper databaseHelper) {
             this.context = context;
-            databaseHelper = DatabaseHelper.getDatabaseHelper(context);
+            this.databaseHelper = databaseHelper;
             inflater = LayoutInflater.from(context);
         }
 
@@ -138,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void bindItem(final Context context, final GoTCharacter gotCharacter) {
+            this.image.setVisibility(View.VISIBLE);
             this.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -152,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
                     .placeholder(R.drawable.profile_placeholder)
                     .error(R.drawable.profile_placeholder_error)
                     .into(this.image);
+        }
+
+        public void loadMoreView(View.OnClickListener onClickListener) {
+            this.image.setVisibility(View.INVISIBLE);
+            this.name.setText("Load More");
+            this.itemView.setOnClickListener(onClickListener);
         }
     }
 }
