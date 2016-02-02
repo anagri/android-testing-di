@@ -1,6 +1,5 @@
 package co.creativev.bootcamp.got;
 
-import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.BaseColumns;
